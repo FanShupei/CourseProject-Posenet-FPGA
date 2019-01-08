@@ -1,5 +1,6 @@
 #include "config.h"
 #include <cassert>
+#include <opencv2/core.hpp>
 
 struct pos2_t
 {
@@ -23,6 +24,9 @@ struct float2_t
         x(_x), y(_y) {}
 };
 
+const float_t SCORE_THRESHOLD = 0.05;
+const int OUTPUT_STRIDE = 16;
+
 struct PoseDecoder
 {
     const float_t* heatmap;
@@ -30,6 +34,7 @@ struct PoseDecoder
     const float_t* disFwd;
     const float_t* disBwd;
 
+    bool valid[Heatmap_Channel];
     float2_t results[Heatmap_Channel];
 
     float_t get_score(int c, int y, int x)
@@ -50,6 +55,8 @@ struct PoseDecoder
     }
 
     void DecodeSinglePose();
+
+    void overlay_skeleton(cv::Mat& img);
 
     void show_heatmap(int c);
 };

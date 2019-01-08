@@ -162,13 +162,15 @@ int main()
 
 	decoder.DecodeSinglePose();
 
-	for (int c=0; c<Heatmap_Channel; c++)
-	{
-		double x = decoder.results[c].x;
-		double y = decoder.results[c].y;
-		printf("%f %f\n", x, y);
-		cv::circle(img2, cv::Point(x, y), 3, cv::Scalar(0,1,0));
-	}
+	decoder.overlay_skeleton(img2);
+
+	// for (int c=0; c<Heatmap_Channel; c++)
+	// {
+	// 	double x = decoder.results[c].x;
+	// 	double y = decoder.results[c].y;
+	// 	printf("%f %f\n", x, y);
+	// 	cv::circle(img2, cv::Point(x, y), 3, cv::Scalar(0,1,0));
+	// }
 
 	cv::imshow("img", img2);
 	cv::waitKey();
